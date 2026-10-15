@@ -7,8 +7,9 @@ android {
         applicationId "dz.manara.mosque"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // each GitHub build gets a higher versionCode so new APKs install over old ones
+        versionCode((System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger())
+        versionName "1.0." + (System.getenv("GITHUB_RUN_NUMBER") ?: "0")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,8 +17,23 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            // Filled from GitHub secrets by the workflow; absent locally
+            def ks = System.getenv("MANARA_KEYSTORE_PATH")
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv("MANARA_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("MANARA_KEY_ALIAS")
+                keyPassword System.getenv("MANARA_KEYSTORE_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         release {
+            if (System.getenv("MANARA_KEYSTORE_PATH")) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

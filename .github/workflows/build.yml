@@ -29,6 +29,31 @@ jobs:
           name: manara-android-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
+      # Signed release build: runs only once the signing secrets exist in the repo settings
+      - name: Restore signing key
+        id: key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then echo "present=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/manara-release.jks"
+          echo "present=true" >> "$GITHUB_OUTPUT"
+      - name: Build signed release APK and AAB
+        if: steps.key.outputs.present == 'true'
+        working-directory: android
+        env:
+          MANARA_KEYSTORE_PATH: ${{ runner.temp }}/manara-release.jks
+          MANARA_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          MANARA_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: ./gradlew assembleRelease bundleRelease
+      - uses: actions/upload-artifact@v4
+        if: steps.key.outputs.present == 'true'
+        with:
+          name: manara-android-release
+          path: |
+            android/app/build/outputs/apk/release/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+
   ios:
     name: iOS (simulator build check)
     runs-on: macos-15
