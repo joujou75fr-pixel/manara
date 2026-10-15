@@ -12,6 +12,11 @@
   if (P.StatusBar) P.StatusBar.hide().catch(function () {});
   if (P.SplashScreen) setTimeout(function () { P.SplashScreen.hide().catch(function () {}); }, 400);
 
+  // first launch in the app: sound on by default (no browser autoplay restriction here)
+  try {
+    if (!localStorage.getItem('manara')) { M.S.sound = true; localStorage.setItem('manara', JSON.stringify(M.S)); document.getElementById('bSound').setAttribute('aria-pressed', 'true'); }
+  } catch (e) {}
+
   var LN = P.LocalNotifications;
   var busy = false, again = false;
   var KEYS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha', 'jumua'];
@@ -39,7 +44,7 @@
       }
       if (isAndroid) {
         try { await LN.deleteChannel({ id: 'adhan' }); } catch (e) {}
-        try { await LN.createChannel({ id: 'adhan_quiet_v1', name: 'الأذان (دون صوت)', description: 'يُستعمل حين يُشغَّل الأذان كاملًا من داخل التطبيق', importance: 2, visibility: 1, vibration: true }); } catch (e) {}
+        try { await LN.createChannel({ id: 'adhan_clip_v1', name: 'الأذان', description: 'مطلع الأذان عند دخول وقت الصلاة', importance: 5, visibility: 1, vibration: true, sound: 'adhan_clip.wav' }); } catch (e) {}
         for (var c of KEYS) {
           try {
             await LN.createChannel({ id: 'adhan_' + c + '_v1', name: 'أذان ' + M.NAMES[c], description: 'حان الآن موعد أذان صلاة ' + M.NAMES[c],
@@ -48,8 +53,8 @@
         }
       }
 
-      // full adhan from a file plays inside the app, so the phone alert stays quiet on Android
-      var quiet = S.voiceMode === 'file' && isAndroid;
+      // adhan mode: the notification carries the opening of the adhan (iOS allows 30 s at most)
+      var useAdhan = S.voiceMode === 'file';
       var list = [], now = Date.now(), tzMs = S.tz * 3600e3;
       for (var i = 0; i < 7; i++) {
         var base = new Date(now + tzMs + i * 86400e3);
@@ -63,9 +68,9 @@
             id: i * 10 + j + 1,
             title: 'حان الآن موعد أذان صلاة ' + M.NAMES[key],
             body: S.name,
-            sound: quiet ? undefined : 'adhan_' + key + '.wav',
+            sound: useAdhan ? 'adhan_clip.wav' : 'adhan_' + key + '.wav',
             schedule: { at: new Date(at), allowWhileIdle: true },
-            channelId: quiet ? 'adhan_quiet_v1' : 'adhan_' + key + '_v1'
+            channelId: useAdhan ? 'adhan_clip_v1' : 'adhan_' + key + '_v1'
           });
         });
       }

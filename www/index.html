@@ -489,7 +489,7 @@ function playNext(){
 function announce(key,force){
   const native=window.Manara&&window.Manara.nativeNotif;
   if(!force&&!S.sound)return;
-  if(!force&&native&&!(S.voiceMode==="file"&&FILES.main))return;   // phone notification already says it
+  if(!force&&native)return;   // phone notifications are on: they carry the sound   // phone notification already says it
   stopVoice();
   if(S.voiceMode==="chime"){chime(3);return}
   const f=S.voiceMode==="file"?((key==="fajr"&&FILES.fajr)||FILES.main):null;

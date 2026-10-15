@@ -21,6 +21,7 @@
 		C77A374E36B34EC78FB95747 /* adhan_maghrib.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E06E4BBC6384EFFB78CC2A5 /* adhan_maghrib.wav */; };
 		24F93EA5BE904F66AA5D8B13 /* adhan_isha.wav in Resources */ = {isa = PBXBuildFile; fileRef = D119ECA98F0A4477BC7A4B95 /* adhan_isha.wav */; };
 		54739D3FD76C4DBB9F9E31F9 /* adhan_jumua.wav in Resources */ = {isa = PBXBuildFile; fileRef = 26E85B5BB2E84A13B929D0DA /* adhan_jumua.wav */; };
+		4D43204CAABD47BBA604672F /* adhan_clip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 41E7E54204AB46F88AB55D04 /* adhan_clip.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		3E06E4BBC6384EFFB78CC2A5 /* adhan_maghrib.wav */ = {isa = PBXFileReference; name = "adhan_maghrib.wav"; path = "adhan_maghrib.wav"; sourceTree = "<group>"; lastKnownFileType = audio.wav; includeInIndex = 0; };
 		D119ECA98F0A4477BC7A4B95 /* adhan_isha.wav */ = {isa = PBXFileReference; name = "adhan_isha.wav"; path = "adhan_isha.wav"; sourceTree = "<group>"; lastKnownFileType = audio.wav; includeInIndex = 0; };
 		26E85B5BB2E84A13B929D0DA /* adhan_jumua.wav */ = {isa = PBXFileReference; name = "adhan_jumua.wav"; path = "adhan_jumua.wav"; sourceTree = "<group>"; lastKnownFileType = audio.wav; includeInIndex = 0; };
+		41E7E54204AB46F88AB55D04 /* adhan_clip.wav */ = {isa = PBXFileReference; name = "adhan_clip.wav"; path = "adhan_clip.wav"; sourceTree = "<group>"; lastKnownFileType = audio.wav; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				3E06E4BBC6384EFFB78CC2A5 /* adhan_maghrib.wav */,
 				D119ECA98F0A4477BC7A4B95 /* adhan_isha.wav */,
 				26E85B5BB2E84A13B929D0DA /* adhan_jumua.wav */,
+				41E7E54204AB46F88AB55D04 /* adhan_clip.wav */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				C77A374E36B34EC78FB95747 /* adhan_maghrib.wav in Resources */,
 				24F93EA5BE904F66AA5D8B13 /* adhan_isha.wav in Resources */,
 				54739D3FD76C4DBB9F9E31F9 /* adhan_jumua.wav in Resources */,
+				4D43204CAABD47BBA604672F /* adhan_clip.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
