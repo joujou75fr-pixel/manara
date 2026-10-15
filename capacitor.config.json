@@ -1,0 +1,12 @@
+{
+  "appId": "dz.manara.mosque",
+  "appName": "منارة",
+  "webDir": "www",
+  "backgroundColor": "#0f1f23",
+  "android": { "backgroundColor": "#0f1f23" },
+  "ios": { "backgroundColor": "#0f1f23", "contentInset": "never" },
+  "plugins": {
+    "SplashScreen": { "launchAutoHide": false, "backgroundColor": "#0f1f23", "showSpinner": false },
+    "LocalNotifications": { "iconColor": "#d2b06e" }
+  }
+}
