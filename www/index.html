@@ -442,7 +442,7 @@ function unlockVoice(){
 }
 document.addEventListener("pointerdown",unlockVoice,{once:false,passive:true});
 /* adhan files: chosen by the user (kept on this device) or bundled with the app */
-const BUILTIN={main:"sounds/adhan.m4a",fajr:"sounds/adhan_fajr.m4a"};
+const BUILTIN={main:"sounds/full_adhan.m4a",fajr:"sounds/full_adhan_fajr.m4a"};
 const FILES={main:null,fajr:null};
 const DB={
   open(){return new Promise((res,rej)=>{try{const r=indexedDB.open("manara",1);r.onupgradeneeded=()=>r.result.createObjectStore("files");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})},
